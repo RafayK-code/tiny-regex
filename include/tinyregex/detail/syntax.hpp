@@ -1,70 +1,40 @@
 #pragma once
-#include <concepts>
 #include <cstdint>
 
-namespace tinyregex::detail
+namespace tinyregex::detail::syntax
 {
-
-class Expression {};
-
-template <typename T>
-concept RegexExpression = std::derived_from<T, Expression>;
 
 template <char C>
-class Literal : public Expression
-{
-};
-
-template <RegexExpression... Children>
-class Sequence : public Expression
-{
-};
-
-template <RegexExpression Left, RegexExpression Right>
-class Union : public Expression
-{
-};
-
-template <RegexExpression Child>
-class RepeatZeroOrMore : public Expression
-{
-};
-
-template <RegexExpression Child>
-class RepeatOneOrMore : public Expression
-{
-};
-
-template <RegexExpression Child>
-class Optional : public Expression
-{
-};
-
-template <std::uint32_t Index, RegexExpression Child> 
-class CaptureGroup : public Expression
-{
-};
-
-template <RegexExpression Child>
-class NonCaptureGroup : public Expression
-{
-};
+class Literal {};
 
 template <std::uint32_t Index>
-class Backreference : public Expression
-{
-};
+class Backreference {};
 
-class Wildcard : public Expression
-{
-};
+class Wildcard {};
 
-class StartAnchor : public Expression
-{
-};
+class StartAnchor {};
 
-class EndAnchor : public Expression
-{
-};
+class EndAnchor {};
+
+template <typename... Children>
+class Sequence {};
+
+template <typename Left, typename Right>
+class Union {};
+
+template <typename Child>
+class RepeatZeroOrMore {};
+
+template <typename Child>
+class RepeatOneOrMore {};
+
+template <typename Child>
+class Optional {};
+
+template <std::uint32_t Index, typename Child> 
+class CaptureGroup {};
+
+template <typename Child>
+class NonCaptureGroup {};
 
 }

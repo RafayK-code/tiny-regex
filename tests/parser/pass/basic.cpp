@@ -1,7 +1,8 @@
 #include <tinyregex/detail/parser.hpp>
 #include <type_traits>
 
-using namespace tinyregex::detail;
+using namespace tinyregex::detail::parser;
+using namespace tinyregex::detail::syntax;
 
 namespace literal
 {

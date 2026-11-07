@@ -6,7 +6,7 @@
 #include <cstddef>
 #include <type_traits>
 
-namespace tinyregex::detail
+namespace tinyregex::detail::parser
 {
 
 template <typename T, std::size_t NextPosition, std::uint32_t NextIndex>
@@ -31,7 +31,7 @@ private:
 
         if constexpr (current == '.')
         {
-            return ParseResult<Wildcard, Position + 1, NextIndex>{};
+            return ParseResult<syntax::Wildcard, Position + 1, NextIndex>{};
         }
         else if constexpr (current == '(')
         {
@@ -40,11 +40,11 @@ private:
         }
         else if constexpr (current == '^')
         {
-            return ParseResult<StartAnchor, Position + 1, NextIndex>{};
+            return ParseResult<syntax::StartAnchor, Position + 1, NextIndex>{};
         }
         else if constexpr (current == '$')
         {
-            return ParseResult<EndAnchor, Position + 1, NextIndex>{};
+            return ParseResult<syntax::EndAnchor, Position + 1, NextIndex>{};
         }
         else if constexpr (current == '\\')
         {
@@ -54,16 +54,16 @@ private:
             if constexpr (next >= '1' && next <= '9')
             {
                 constexpr auto index = static_cast<std::uint32_t>(next - '0');
-                return ParseResult<Backreference<index>, Position + 2, NextIndex>{};
+                return ParseResult<syntax::Backreference<index>, Position + 2, NextIndex>{};
             }
             else
             {
-                return ParseResult<Literal<next>, Position + 2, NextIndex>{};
+                return ParseResult<syntax::Literal<next>, Position + 2, NextIndex>{};
             }
         }
         else
         {
-            return ParseResult<Literal<current>, Position + 1, NextIndex>{};
+            return ParseResult<syntax::Literal<current>, Position + 1, NextIndex>{};
         }
     }
 
@@ -115,15 +115,15 @@ private:
 
         if constexpr (next == '*')
         {
-            return ParseResult<RepeatZeroOrMore<Child>, Atom::next_position + 1, Atom::next_capture_index>{};
+            return ParseResult<syntax::RepeatZeroOrMore<Child>, Atom::next_position + 1, Atom::next_capture_index>{};
         }
         else if constexpr (next == '+')
         {
-            return ParseResult<RepeatOneOrMore<Child>, Atom::next_position + 1, Atom::next_capture_index>{};
+            return ParseResult<syntax::RepeatOneOrMore<Child>, Atom::next_position + 1, Atom::next_capture_index>{};
         }
         else if constexpr (next == '?')
         {
-            return ParseResult<Optional<Child>, Atom::next_position + 1, Atom::next_capture_index>{};
+            return ParseResult<syntax::Optional<Child>, Atom::next_position + 1, Atom::next_capture_index>{};
         }
         else
         {
@@ -135,8 +135,8 @@ private:
     static constexpr bool is_valid(char token)
     {
         constexpr bool is_anchor = 
-            std::is_same_v<Child, StartAnchor> ||
-            std::is_same_v<Child, EndAnchor>;
+            std::is_same_v<Child, syntax::StartAnchor> ||
+            std::is_same_v<Child, syntax::EndAnchor>;
 
         const bool has_quantifier =
             token == '*' ||
@@ -159,14 +159,14 @@ template <typename T, typename Child>
 class SequencePrepend
 {
 public:
-    using type = Sequence<T, Child>;
+    using type = syntax::Sequence<T, Child>;
 };
 
 template <typename T, typename... Children>
-class SequencePrepend<T, Sequence<Children...>>
+class SequencePrepend<T, syntax::Sequence<Children...>>
 {
 public:
-    using type = Sequence<T, Children...>;
+    using type = syntax::Sequence<T, Children...>;
 };
 
 template <fixed_string Pattern, std::size_t Position, std::uint32_t NextIndex>
@@ -212,7 +212,7 @@ private:
         if constexpr (next == '|')
         {
             using Expression = ParseExpression<Pattern, Sequence::next_position + 1, Sequence::next_capture_index>;
-            return ParseResult<Union<typename Sequence::type, typename Expression::type>, Expression::next_position, Expression::next_capture_index>{};
+            return ParseResult<syntax::Union<typename Sequence::type, typename Expression::type>, Expression::next_position, Expression::next_capture_index>{};
         }
         else
         {
@@ -242,13 +242,13 @@ private:
 
             using Expression = ParseExpression<Pattern, Position + 2, NextIndex>;
             static_assert(Pattern.template get<Expression::next_position>() == ')', "Expected ')'");
-            return ParseResult<NonCaptureGroup<typename Expression::type>, Expression::next_position + 1, Expression::next_capture_index>{};
+            return ParseResult<syntax::NonCaptureGroup<typename Expression::type>, Expression::next_position + 1, Expression::next_capture_index>{};
         }
         else
         {
             using Expression = ParseExpression<Pattern, Position, NextIndex + 1>;
             static_assert(Pattern.template get<Expression::next_position>() == ')', "Syntax error: Expected ')'");
-            return ParseResult<CaptureGroup<NextIndex, typename Expression::type>, Expression::next_position + 1, Expression::next_capture_index>{};
+            return ParseResult<syntax::CaptureGroup<NextIndex, typename Expression::type>, Expression::next_position + 1, Expression::next_capture_index>{};
         }
     }
 
@@ -265,7 +265,7 @@ template <typename Node, std::uint32_t CaptureCount>
 class ValidBackreference : public std::true_type {};
 
 template <std::uint32_t Index, std::uint32_t CaptureCount>
-class ValidBackreference<Backreference<Index>, CaptureCount> : public std::bool_constant<(Index >= 1 && Index <= CaptureCount)> {};
+class ValidBackreference<syntax::Backreference<Index>, CaptureCount> : public std::bool_constant<(Index >= 1 && Index <= CaptureCount)> {};
 
 template <std::uint32_t CaptureCount>
 class BackreferencePredicate

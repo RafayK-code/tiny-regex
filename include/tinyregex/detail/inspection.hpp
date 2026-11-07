@@ -11,84 +11,84 @@ template <typename Node>
 class ChildrenOf;
 
 template <char C>
-class ChildrenOf<Literal<C>>
+class ChildrenOf<syntax::Literal<C>>
 {
 public:
     using type = TypeList<>;
 };
 
 template <std::uint32_t Index>
-class ChildrenOf<Backreference<Index>>
+class ChildrenOf<syntax::Backreference<Index>>
 {
 public:
     using type = TypeList<>;
 };
 
 template <>
-class ChildrenOf<Wildcard>
+class ChildrenOf<syntax::Wildcard>
 {
 public:
     using type = TypeList<>;
 };
 
 template <>
-class ChildrenOf<StartAnchor>
+class ChildrenOf<syntax::StartAnchor>
 {
 public:
     using type = TypeList<>;
 };
 
 template <>
-class ChildrenOf<EndAnchor>
+class ChildrenOf<syntax::EndAnchor>
 {
 public:
     using type = TypeList<>;
 };
 
-template <RegexExpression... Children>
-class ChildrenOf<Sequence<Children...>>
+template <typename... Children>
+class ChildrenOf<syntax::Sequence<Children...>>
 {
 public:
     using type = TypeList<Children...>;
 };
 
-template <RegexExpression Left, RegexExpression Right>
-class ChildrenOf<Union<Left, Right>>
+template <typename Left, typename Right>
+class ChildrenOf<syntax::Union<Left, Right>>
 {
 public:
     using type = TypeList<Left, Right>;
 };
 
-template <RegexExpression Child>
-class ChildrenOf<RepeatZeroOrMore<Child>>
+template <typename Child>
+class ChildrenOf<syntax::RepeatZeroOrMore<Child>>
 {
 public:
     using type = TypeList<Child>;
 };
 
-template <RegexExpression Child>
-class ChildrenOf<RepeatOneOrMore<Child>>
+template <typename Child>
+class ChildrenOf<syntax::RepeatOneOrMore<Child>>
 {
 public:
     using type = TypeList<Child>;
 };
 
-template <RegexExpression Child>
-class ChildrenOf<Optional<Child>>
+template <typename Child>
+class ChildrenOf<syntax::Optional<Child>>
 {
 public:
     using type = TypeList<Child>;
 };
 
-template <std::uint32_t Index, RegexExpression Child>
-class ChildrenOf<CaptureGroup<Index, Child>>
+template <std::uint32_t Index, typename Child>
+class ChildrenOf<syntax::CaptureGroup<Index, Child>>
 {
 public:
     using type = TypeList<Child>;
 };
 
-template <RegexExpression Child>
-class ChildrenOf<NonCaptureGroup<Child>>
+template <typename Child>
+class ChildrenOf<syntax::NonCaptureGroup<Child>>
 {
 public:
     using type = TypeList<Child>;
