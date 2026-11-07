@@ -10,7 +10,7 @@ namespace nested_repetition
         NonCaptureGroup<
             Union<
                 Sequence<Literal<'a'>, Literal<'b'>>,
-                Sequence<RepeatOneOrMore<Literal<'c'>>>
+                RepeatOneOrMore<Literal<'c'>>
             >
         >,
         RepeatZeroOrMore<
@@ -21,10 +21,7 @@ namespace nested_repetition
                     Optional<
                         CaptureGroup<
                             2,
-                            Union<
-                                Sequence<Literal<'e'>>,
-                                Sequence<Literal<'f'>>
-                            >
+                            Union<Literal<'e'>, Literal<'f'>>
                         >
                     >
                 >
@@ -46,14 +43,12 @@ namespace nested_capture_numbering
         CaptureGroup<
             1,
             Union<
-                Sequence<Literal<'a'>>,
-                Sequence<
-                    CaptureGroup<
-                        2,
-                        Sequence<
-                            Literal<'b'>,
-                            CaptureGroup<3, Sequence<Literal<'c'>>>
-                        >
+                Literal<'a'>,
+                CaptureGroup<
+                    2,
+                    Sequence<
+                        Literal<'b'>,
+                        CaptureGroup<3, Literal<'c'>>
                     >
                 >
             >
@@ -76,15 +71,15 @@ namespace captures_across_alternatives
             Union<
                 Sequence<
                     Literal<'a'>,
-                    CaptureGroup<1, Sequence<Literal<'b'>>>
+                    CaptureGroup<1, Literal<'b'>>
                 >,
                 Sequence<
                     Literal<'c'>,
-                    CaptureGroup<2, Sequence<Literal<'d'>>>
+                    CaptureGroup<2, Literal<'d'>>
                 >
             >
         >,
-        CaptureGroup<3, Sequence<Literal<'e'>>>,
+        CaptureGroup<3, Literal<'e'>>,
         Backreference<1>,
         Backreference<2>,
         Backreference<3>
@@ -127,21 +122,18 @@ namespace repeated_backreference_alternatives
         StartAnchor,
         NonCaptureGroup<
             Union<
-                Sequence<CaptureGroup<1, Sequence<Literal<'a'>>>>,
+                CaptureGroup<1, Literal<'a'>>,
                 Union<
-                    Sequence<CaptureGroup<2, Sequence<Literal<'b'>>>>,
-                    Sequence<CaptureGroup<3, Sequence<Literal<'c'>>>>
+                    CaptureGroup<2, Literal<'b'>>,
+                    CaptureGroup<3, Literal<'c'>>
                 >
             >
         >,
         RepeatOneOrMore<
             NonCaptureGroup<
                 Union<
-                    Sequence<Backreference<1>>,
-                    Union<
-                        Sequence<Backreference<2>>,
-                        Sequence<Backreference<3>>
-                    >
+                    Backreference<1>,
+                    Union<Backreference<2>, Backreference<3>>
                 >
             >
         >,

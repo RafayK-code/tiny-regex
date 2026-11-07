@@ -155,8 +155,12 @@ public:
     static constexpr std::uint32_t next_capture_index = Result::next_capture_index;
 };
 
-template <typename T, typename Sequence>
-class SequencePrepend;
+template <typename T, typename Child>
+class SequencePrepend
+{
+public:
+    using type = Sequence<T, Child>;
+};
 
 template <typename T, typename... Children>
 class SequencePrepend<T, Sequence<Children...>>
@@ -176,7 +180,7 @@ private:
 
         if constexpr (next == '\0' || next == '|' || next == ')')
         {
-            return ParseResult<Sequence<typename Repeat::type>, Repeat::next_position, Repeat::next_capture_index>{};
+            return ParseResult<typename Repeat::type, Repeat::next_position, Repeat::next_capture_index>{};
         }
         else
         {

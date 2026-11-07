@@ -5,7 +5,7 @@ using namespace tinyregex::detail;
 
 namespace literal
 {
-    using Expected = Sequence<Literal<'a'>>;
+    using Expected = Literal<'a'>;
 
     static_assert(std::is_same_v<Parse<"a">::type, Expected>);
 }
@@ -19,20 +19,14 @@ namespace sequence
 
 namespace alternation
 {
-    using Expected = Union<
-        Sequence<Literal<'a'>>,
-        Sequence<Literal<'b'>>
-    >;
+    using Expected = Union<Literal<'a'>, Literal<'b'>>;
 
     static_assert(std::is_same_v<Parse<"a|b">::type, Expected>);
 }
 
 namespace alternation_order
 {
-    using Expected = Union<
-        Sequence<Literal<'a'>>,
-        Union<Sequence<Literal<'b'>>, Sequence<Literal<'c'>>>
-    >;
+    using Expected = Union<Literal<'a'>, Union<Literal<'b'>, Literal<'c'>>>;
 
     static_assert(std::is_same_v<Parse<"a|b|c">::type, Expected>);
 }
@@ -49,21 +43,21 @@ namespace concatenation_precedence
 
 namespace zero_or_more
 {
-    using Expected = Sequence<RepeatZeroOrMore<Literal<'a'>>>;
+    using Expected = RepeatZeroOrMore<Literal<'a'>>;
 
     static_assert(std::is_same_v<Parse<"a*">::type, Expected>);
 }
 
 namespace one_or_more
 {
-    using Expected = Sequence<RepeatOneOrMore<Literal<'a'>>>;
+    using Expected = RepeatOneOrMore<Literal<'a'>>;
 
     static_assert(std::is_same_v<Parse<"a+">::type, Expected>);
 }
 
 namespace optional
 {
-    using Expected = Sequence<Optional<Literal<'a'>>>;
+    using Expected = Optional<Literal<'a'>>;
 
     static_assert(std::is_same_v<Parse<"a?">::type, Expected>);
 }
@@ -80,31 +74,22 @@ namespace quantifier_precedence
 
 namespace capture_group
 {
-    using Expected = Sequence<
-        CaptureGroup<1, Sequence<Literal<'a'>, Literal<'b'>>>
-    >;
+    using Expected = CaptureGroup<1, Sequence<Literal<'a'>, Literal<'b'>>>;
 
     static_assert(std::is_same_v<Parse<"(ab)">::type, Expected>);
 }
 
 namespace noncapture_group
 {
-    using Expected = Sequence<
-        NonCaptureGroup<Sequence<Literal<'a'>, Literal<'b'>>>
-    >;
+    using Expected = NonCaptureGroup<Sequence<Literal<'a'>, Literal<'b'>>>;
 
     static_assert(std::is_same_v<Parse<"(?:ab)">::type, Expected>);
 }
 
 namespace quantified_group
 {
-    using Expected = Sequence<
-        RepeatOneOrMore<
-            CaptureGroup<
-                1,
-                Union<Sequence<Literal<'a'>>, Sequence<Literal<'b'>>>
-            >
-        >
+    using Expected = RepeatOneOrMore<
+        CaptureGroup<1, Union<Literal<'a'>, Literal<'b'>>>
     >;
 
     static_assert(std::is_same_v<Parse<"(a|b)+">::type, Expected>);
@@ -113,9 +98,9 @@ namespace quantified_group
 namespace capture_numbering
 {
     using Expected = Sequence<
-        CaptureGroup<1, Sequence<Literal<'a'>>>,
-        NonCaptureGroup<Sequence<Literal<'b'>>>,
-        CaptureGroup<2, Sequence<Literal<'c'>>>
+        CaptureGroup<1, Literal<'a'>>,
+        NonCaptureGroup<Literal<'b'>>,
+        CaptureGroup<2, Literal<'c'>>
     >;
 
     static_assert(std::is_same_v<Parse<"(a)(?:b)(c)">::type, Expected>);
@@ -123,7 +108,7 @@ namespace capture_numbering
 
 namespace wildcard
 {
-    using Expected = Sequence<Wildcard>;
+    using Expected = Wildcard;
 
     static_assert(std::is_same_v<Parse<".">::type, Expected>);
 }
@@ -158,7 +143,7 @@ namespace escaped_metacharacters
 
 namespace quantified_escaped_anchor
 {
-    using Expected = Sequence<RepeatZeroOrMore<Literal<'^'>>>;
+    using Expected = RepeatZeroOrMore<Literal<'^'>>;
 
     static_assert(std::is_same_v<Parse<R"(\^*)">::type, Expected>);
 }
@@ -166,7 +151,7 @@ namespace quantified_escaped_anchor
 namespace backreference
 {
     using Expected = Sequence<
-        CaptureGroup<1, Sequence<Literal<'a'>>>,
+        CaptureGroup<1, Literal<'a'>>,
         Backreference<1>
     >;
 
