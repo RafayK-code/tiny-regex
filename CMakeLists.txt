@@ -16,6 +16,6 @@ target_compile_features(tinyregex INTERFACE cxx_std_23)
 
 include(CTest)
 
-if(BUILD_TESTS)
+if(BUILD_TESTING)
     add_subdirectory(tests)
 endif()

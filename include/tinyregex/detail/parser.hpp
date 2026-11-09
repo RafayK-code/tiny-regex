@@ -288,6 +288,8 @@ private:
 
 public:
     using type = typename Parsed::type;
+    
+    static constexpr std::uint32_t capture_group_count = Parsed::next_capture_index - 1;
 };
 
 }
