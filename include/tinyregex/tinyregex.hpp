@@ -16,7 +16,7 @@ private:
     using AST = typename Parsed::type;
 
 public:
-    bool match(std::string_view text)
+    bool search(std::string_view text)
     {
         std::array<detail::matcher::Capture, Parsed::capture_group_count> captures{};
 
@@ -35,9 +35,9 @@ public:
 };
 
 template <detail::fixed_string Pattern>
-inline bool match(std::string_view text)
+inline bool search(std::string_view text)
 {
-    return Regex<Pattern>{}.match(text);
+    return Regex<Pattern>{}.search(text);
 }
 
 }

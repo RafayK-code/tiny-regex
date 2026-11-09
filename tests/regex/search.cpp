@@ -3,40 +3,40 @@
 
 TEST_CASE("SubstringSearch")
 {
-    CHECK(tinyregex::match<"cat">("the cat sat"));
-    CHECK(tinyregex::match<"cat">("concatenate"));
-    CHECK(tinyregex::match<"cat">("cacat"));
+    CHECK(tinyregex::search<"cat">("the cat sat"));
+    CHECK(tinyregex::search<"cat">("concatenate"));
+    CHECK(tinyregex::search<"cat">("cacat"));
 }
 
 TEST_CASE("SearchAtStart")
 {
-    CHECK(tinyregex::match<"cat">("cat sat"));
-    CHECK(tinyregex::match<"^cat">("cat sat"));
-    CHECK_FALSE(tinyregex::match<"^cat">("the cat sat"));
+    CHECK(tinyregex::search<"cat">("cat sat"));
+    CHECK(tinyregex::search<"^cat">("cat sat"));
+    CHECK_FALSE(tinyregex::search<"^cat">("the cat sat"));
 }
 
 TEST_CASE("SearchAtEnd")
 {
-    CHECK(tinyregex::match<"cat">("the cat"));
-    CHECK(tinyregex::match<"cat$">("the cat"));
-    CHECK_FALSE(tinyregex::match<"cat$">("the cat sat"));
+    CHECK(tinyregex::search<"cat">("the cat"));
+    CHECK(tinyregex::search<"cat$">("the cat"));
+    CHECK_FALSE(tinyregex::search<"cat$">("the cat sat"));
 }
 
 TEST_CASE("SearchFailure")
 {
-    CHECK_FALSE(tinyregex::match<"cat">("dog"));
-    CHECK_FALSE(tinyregex::match<"cat">(""));
+    CHECK_FALSE(tinyregex::search<"cat">("dog"));
+    CHECK_FALSE(tinyregex::search<"cat">(""));
 }
 
 TEST_CASE("AnchoredSearch")
 {
-    CHECK(tinyregex::match<"^cat$">("cat"));
-    CHECK_FALSE(tinyregex::match<"^cat$">("scat"));
-    CHECK_FALSE(tinyregex::match<"^cat$">("catapult"));
+    CHECK(tinyregex::search<"^cat$">("cat"));
+    CHECK_FALSE(tinyregex::search<"^cat$">("scat"));
+    CHECK_FALSE(tinyregex::search<"^cat$">("catapult"));
 }
 
 TEST_CASE("PhraseSearch")
 {
-    CHECK(tinyregex::match<"hello world">("say hello world please"));
-    CHECK_FALSE(tinyregex::match<"hello world">("say hello there"));
+    CHECK(tinyregex::search<"hello world">("say hello world please"));
+    CHECK_FALSE(tinyregex::search<"hello world">("say hello there"));
 }
