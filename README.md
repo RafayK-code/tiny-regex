@@ -20,8 +20,8 @@ bool found = tinyregex::search<"cat">("the cat sat"); // true
 
 // object based
 tinyregex::Regex<"cat"> regex;
-bool first = regex.search("concatenate");             // true
-bool second = regex.search("dog");                    // false
+bool first = regex.search("concatenate"); // true
+bool second = regex.search("dog"); // false
 ```
 
 ## Supported syntax
@@ -47,9 +47,9 @@ Repetition is greedy. Capturing groups are numbered from 1 in opening-parenthesi
 A backreference to a group that did not participate fails that matching path. A group that successfully captured an empty string can be referenced and matches zero characters.
 
 ```cpp
-tinyregex::search<R"(^(a+)\1$)">("aaaa");    // true: "aa" followed by "aa"
-tinyregex::search<R"(^(a)?b\1$)">("b");      // false: group 1 did not participate
-tinyregex::search<R"(^(a*)b\1$)">("b");      // true: group 1 captured an empty string
+tinyregex::search<R"(^(a+)\1$)">("aaaa"); // true: "aa" followed by "aa"
+tinyregex::search<R"(^(a)?b\1$)">("b"); // false: group 1 did not participate
+tinyregex::search<R"(^(a*)b\1$)">("b"); // true: group 1 captured an empty string
 ```
 
 Invalid patterns and references to nonexistent capture groups are rejected during C++ compilation. Empty patterns, empty groups, and empty alternatives are currently rejected.
