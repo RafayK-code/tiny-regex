@@ -1,6 +1,6 @@
 # TinyRegex
 
-A header-only C++ 23 compile-time regex library.
+A header-only C++23 compile-time regex library.
 
 Patterns are parsed into a type-based syntax tree during compilation. Template specializations implement the matching operations, producing code specialized for each pattern. Matching uses greedy, regex-directed backtracking.
 
@@ -8,7 +8,7 @@ TinyRegex is a learning project focused on regex engines and metaprogramming.
 
 ## Usage
 
-TinyRegex provides a class and free function that search for a match anywhere in the input. TinyRegex does not provide a separate match function, instead, anchors can be used to achieve the same functionality.
+TinyRegex provides a class and free function that search for a match anywhere in the input. TinyRegex does not provide a separate match function; instead, anchors can be used to achieve the same functionality.
 
 Both interfaces accept `std::string_view` and return a boolean.
 
@@ -67,12 +67,14 @@ add_subdirectory(path/to/tinyregex)
 target_link_libraries(your_target PRIVATE tinyregex::tinyregex)
 ```
 
+Tests are enabled by default when TinyRegex is built as a standalone project and disabled when included as a dependency. The `TINYREGEX_BUILD_TESTS` CMake option can be set to `ON` or `OFF` to override this behaviour.
+
 ## Tests
 
 Configure, build the runtime tests, then run the suite:
 
 ```sh
-cmake -S . -B build -DCMAKE_CXX_COMPILER=clang++
+cmake -S . -B build -DTINYREGEX_BUILD_TESTS=ON
 cmake --build build
 ctest --test-dir build --output-on-failure
 ```
