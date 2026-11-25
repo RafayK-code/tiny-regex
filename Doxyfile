@@ -1,0 +1,113 @@
+#---------------------------------------------------------------------------
+# Project configuration
+#---------------------------------------------------------------------------
+
+PROJECT_NAME           = "TinyRegex"
+PROJECT_BRIEF          = "A compile-time C++20 regular expression engine."
+OUTPUT_DIRECTORY       = docs
+OUTPUT_LANGUAGE        = English
+
+#---------------------------------------------------------------------------
+# Input configuration
+#---------------------------------------------------------------------------
+
+INPUT                  = include README.md
+FILE_PATTERNS          = *.hpp *.md
+RECURSIVE              = YES
+INPUT_ENCODING         = UTF-8
+USE_MDFILE_AS_MAINPAGE  = README.md
+MARKDOWN_SUPPORT       = YES
+
+#---------------------------------------------------------------------------
+# Documentation extraction
+#---------------------------------------------------------------------------
+
+EXTRACT_ALL            = NO
+EXTRACT_PRIVATE        = YES
+EXTRACT_PRIV_VIRTUAL   = NO
+EXTRACT_STATIC         = YES
+EXTRACT_LOCAL_CLASSES  = YES
+
+HIDE_UNDOC_MEMBERS     = YES
+HIDE_UNDOC_CLASSES     = YES
+HIDE_UNDOC_NAMESPACES  = YES
+
+INTERNAL_DOCS          = YES
+BRIEF_MEMBER_DESC      = YES
+REPEAT_BRIEF           = YES
+ALWAYS_DETAILED_SEC    = NO
+
+#---------------------------------------------------------------------------
+# Documentation organization
+#---------------------------------------------------------------------------
+
+FULL_PATH_NAMES        = YES
+STRIP_FROM_PATH        = .
+SORT_MEMBER_DOCS       = NO
+SORT_BRIEF_DOCS        = NO
+SORT_MEMBERS_CTORS_1ST = YES
+SHOW_NAMESPACES        = YES
+SHOW_FILES             = YES
+
+#---------------------------------------------------------------------------
+# Source code navigation
+#---------------------------------------------------------------------------
+
+SOURCE_BROWSER         = YES
+INLINE_SOURCES         = NO
+STRIP_CODE_COMMENTS    = NO
+
+REFERENCES_RELATION    = YES
+REFERENCED_BY_RELATION = YES
+REFERENCES_LINK_SOURCE = YES
+
+#---------------------------------------------------------------------------
+# HTML output
+#---------------------------------------------------------------------------
+
+GENERATE_HTML          = YES
+HTML_OUTPUT            = html
+
+GENERATE_TREEVIEW      = YES
+TREEVIEW_WIDTH         = 250
+DISABLE_INDEX          = NO
+SEARCHENGINE           = YES
+
+#---------------------------------------------------------------------------
+# Other output formats
+#---------------------------------------------------------------------------
+
+GENERATE_LATEX         = NO
+GENERATE_RTF           = NO
+GENERATE_MAN           = NO
+GENERATE_XML           = NO
+GENERATE_DOCBOOK       = NO
+
+#---------------------------------------------------------------------------
+# Graphviz diagrams
+#---------------------------------------------------------------------------
+
+HAVE_DOT               = YES
+CLASS_GRAPH            = YES
+COLLABORATION_GRAPH    = YES
+INCLUDE_GRAPH          = YES
+INCLUDED_BY_GRAPH      = YES
+
+CALL_GRAPH             = NO
+CALLER_GRAPH           = NO
+GRAPHICAL_HIERARCHY    = YES
+
+DOT_IMAGE_FORMAT       = svg
+INTERACTIVE_SVG        = YES
+DOT_GRAPH_MAX_NODES    = 50
+
+#---------------------------------------------------------------------------
+# Documentation warnings
+#---------------------------------------------------------------------------
+
+QUIET                  = NO
+WARNINGS               = YES
+WARN_IF_UNDOCUMENTED   = YES
+WARN_IF_DOC_ERROR      = YES
+WARN_NO_PARAMDOC       = NO
+WARN_AS_ERROR          = NO
