@@ -3,7 +3,7 @@
 #---------------------------------------------------------------------------
 
 PROJECT_NAME           = "TinyRegex"
-PROJECT_BRIEF          = "A compile-time C++20 regular expression engine."
+PROJECT_BRIEF          = "A compile-time C++23 regular expression engine."
 OUTPUT_DIRECTORY       = docs
 OUTPUT_LANGUAGE        = English
 
