@@ -86,3 +86,13 @@ The tests cover three layers:
 - `tests/regex/`: public API searches, backtracking, edge cases, and long inputs.
 
 Parser tests invoke the compiler through a CMake script. Runtime tests use doctest. The current parser test runner uses GCC/Clang-style compiler flags.
+
+## Documentation
+
+The source code is documented using Doxygen. To generate the documentation, install Doxygen and Graphviz, then run the following command from the repository root:
+
+```sh
+doxygen Doxyfile
+```
+
+The generated HTML documentation can be accessed by opening `docs/html/index.html` in a browser.
